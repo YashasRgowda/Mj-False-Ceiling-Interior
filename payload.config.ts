@@ -34,6 +34,13 @@ const hasS3 = Boolean(
 const storagePlugins = hasS3
   ? [
       s3Storage({
+        /**
+         * Vercel caps serverless request bodies at 4.5 MB. Phone photos are
+         * routinely 3-8 MB, so routing uploads through the function would fail
+         * in production. With clientUploads the browser PUTs straight to
+         * Supabase Storage using a presigned URL and skips Vercel entirely.
+         */
+        clientUploads: true,
         collections: {
           media: {
             /**

@@ -26,8 +26,11 @@ const sans = Hanken_Grotesk({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   return {
-    // TODO: set to the real domain once registered, so OG images resolve.
-    metadataBase: new URL("https://mjfalseceilinginterior.com"),
+    // Follows NEXT_PUBLIC_SERVER_URL so OG images and canonical links are
+    // correct in every environment. Set it to the live domain on Vercel.
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:3100"
+    ),
     title: {
       default: `${settings.businessName} — False Ceiling & Interior Designers in ${settings.city}`,
       template: `%s — ${settings.shortName}`,
