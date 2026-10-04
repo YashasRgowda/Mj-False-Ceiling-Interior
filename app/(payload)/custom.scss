@@ -1,0 +1,260 @@
+/* ==================================================================
+   MJ INTERIOR — ADMIN PANEL SKIN
+   The person using this runs an interior business. Everything here is
+   about making targets bigger, photos larger and sections colour-coded
+   so nothing has to be read twice.
+   ================================================================== */
+
+:root {
+  --mj-gold: #DCBA7D;
+  --mj-brass: #A07D48;
+  --mj-home: #E0B252;
+  --mj-services: #6FB3A0;
+  --mj-about: #C88FB0;
+  --mj-contact: #7FA7D9;
+}
+
+/* ---------- sidebar: colour-code each section ---------- */
+.nav .nav-group__content a,
+.nav a.nav__link {
+  font-size: 15px;
+  padding: 11px 12px;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+  margin-bottom: 3px;
+  transition: background .18s ease, border-color .18s ease;
+}
+.nav a.nav__link:hover { background: rgba(255,255,255,.05); }
+
+/* Globals and collections, matched by their href */
+.nav a[href*="/globals/site-settings"]   { border-left-color: var(--mj-home); }
+.nav a[href*="/collections/services"]    { border-left-color: var(--mj-services); }
+.nav a[href*="/globals/about-page"]      { border-left-color: var(--mj-about); }
+.nav a[href*="/globals/contact-settings"]{ border-left-color: var(--mj-contact); }
+
+.nav a[href*="/globals/site-settings"].active,
+.nav a[href*="/globals/site-settings"][aria-current="page"]   { background: rgba(224,178,82,.13); }
+.nav a[href*="/collections/services"].active,
+.nav a[href*="/collections/services"][aria-current="page"]    { background: rgba(111,179,160,.13); }
+.nav a[href*="/globals/about-page"].active,
+.nav a[href*="/globals/about-page"][aria-current="page"]      { background: rgba(200,143,176,.13); }
+.nav a[href*="/globals/contact-settings"].active,
+.nav a[href*="/globals/contact-settings"][aria-current="page"]{ background: rgba(127,167,217,.13); }
+
+/* ---------- photos: make them big enough to recognise ---------- */
+/* Thumbnails in upload fields and relationship rows */
+.thumbnail,
+.thumbnail img,
+.upload__imageAndDetails .thumbnail,
+.file-details__thumbnail {
+  width: 92px !important;
+  height: 92px !important;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.thumbnail img,
+.file-details__thumbnail img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* Rows in an upload list: roomier, easier to hit */
+.upload--has-many .upload__dragAndDrop,
+.uploads__list > * {
+  min-height: 104px;
+}
+.file-details {
+  padding: 10px 12px;
+}
+.file-details__main {
+  gap: 14px;
+  align-items: center;
+}
+
+/* The big preview on an individual photo */
+.file-details__preview img,
+.upload__preview img { border-radius: 8px; }
+
+/* ---------- bigger, clearer controls ---------- */
+.btn {
+  font-size: 14px;
+  padding: 11px 18px;
+  border-radius: 6px;
+}
+.btn--style-primary {
+  background: var(--mj-gold);
+  color: #17140E;
+  border-color: var(--mj-gold);
+  font-weight: 600;
+}
+.btn--style-primary:hover { background: #EACD97; border-color: #EACD97; }
+
+/* Save button should be unmissable */
+.doc-controls__controls .btn--style-primary,
+button[type="submit"].btn--style-primary {
+  background: var(--mj-gold);
+  color: #17140E;
+}
+
+/* ---------- forms: more air, larger text ---------- */
+.field-type label.field-label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.field-description {
+  font-size: 13px;
+  line-height: 1.55;
+  opacity: .72;
+}
+.field-type input[type="text"],
+.field-type input[type="email"],
+.field-type input[type="number"],
+.field-type textarea {
+  font-size: 15px;
+  padding: 11px 12px;
+}
+.field-type { margin-bottom: 22px; }
+
+/* Tabs across the top of a document */
+.tabs-field__tabs { gap: 4px; }
+.tabs-field__tab-button {
+  font-size: 14.5px;
+  padding: 10px 16px;
+  border-radius: 6px 6px 0 0;
+}
+.tabs-field__tab-button--active {
+  color: var(--mj-gold);
+  border-bottom-color: var(--mj-gold);
+}
+
+/* ---------- hide developer noise ---------- */
+/* Bulk select / Edit / Delete bar confuses more than it helps here. */
+.list-selection,
+.list-controls__buttons .btn--icon-style-none[aria-label*="olumn"],
+.collection-list__sub-header { display: none !important; }
+
+/* No reason to show the raw API route or the copy-ID affordance */
+.doc-controls__api-url,
+.id-label { display: none !important; }
+
+/* ---------- array rows: readable, not cramped ---------- */
+.array-field__draggable-rows > * { margin-bottom: 10px; }
+.collapsible__header { font-size: 14.5px; padding: 12px 14px; }
+
+/* ---------- dashboard cards ---------- */
+.dashboard__card-list { gap: 14px; }
+.card {
+  padding: 22px 20px;
+  border-radius: 8px;
+  min-height: 96px;
+}
+.card__title { font-size: 17px; font-weight: 600; }
+
+/* ==================================================================
+   NAV ORDER
+   Payload renders collections before globals. Force the order the
+   owner asked for: Home Page, Services, About Page, Contact Page.
+   ================================================================== */
+.nav .nav-group__content {
+  display: flex;
+  flex-direction: column;
+}
+.nav .nav-group__content a[href*="/globals/site-settings"]    { order: 1; }
+.nav .nav-group__content a[href*="/collections/services"]     { order: 2; }
+.nav .nav-group__content a[href*="/globals/about-page"]       { order: 3; }
+.nav .nav-group__content a[href*="/globals/contact-settings"] { order: 4; }
+
+/* ==================================================================
+   PHONES & TABLETS
+   The owner will open this on his phone to swap a photo, so the admin
+   has to work at 390px, not just on a laptop.
+   ================================================================== */
+@media (max-width: 1024px) {
+  /* Thumbnails were sized for desktop; keep them visible but smaller. */
+  .thumbnail,
+  .thumbnail img,
+  .file-details__thumbnail {
+    width: 68px !important;
+    height: 68px !important;
+  }
+  .uploads__list > *,
+  .upload--has-many .upload__dragAndDrop { min-height: 84px; }
+}
+
+@media (max-width: 768px) {
+  /* Document header and controls stack instead of overflowing. */
+  .doc-controls,
+  .doc-controls__wrapper {
+    flex-wrap: wrap;
+    gap: 10px;
+    height: auto;
+  }
+  .doc-controls__content { flex-wrap: wrap; gap: 8px; }
+
+  /* Save must stay reachable with a thumb. */
+  .doc-controls__controls { width: 100%; }
+  .doc-controls__controls .btn { width: 100%; justify-content: center; }
+
+  /* Tabs scroll sideways rather than squashing. */
+  .tabs-field__tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs-field__tabs::-webkit-scrollbar { display: none; }
+  .tabs-field__tab-button { white-space: nowrap; flex: 0 0 auto; font-size: 14px; }
+
+  /* Give the form the full width of the screen. */
+  .collection-edit__main,
+  .global-edit__main,
+  .document-fields__edit { padding-left: 14px; padding-right: 14px; }
+  .document-fields__sidebar-wrap { width: 100%; max-width: none; border-left: 0; }
+  .document-fields { flex-direction: column; }
+
+  /* File rows: name under the thumbnail instead of squeezed beside it. */
+  .file-details__main { flex-wrap: wrap; }
+  .file-meta { min-width: 0; word-break: break-word; }
+
+  /* Dashboard cards go single column. */
+  .dashboard__card-list { grid-template-columns: 1fr !important; }
+
+  .field-type input[type="text"],
+  .field-type input[type="email"],
+  .field-type input[type="number"],
+  .field-type textarea {
+    /* 16px stops iOS Safari zooming in when a field is focused. */
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .thumbnail,
+  .thumbnail img,
+  .file-details__thumbnail { width: 56px !important; height: 56px !important; }
+  .uploads__list > * { min-height: 72px; }
+  .btn { padding: 12px 14px; }
+  .nav .nav-group__content a,
+  .nav a.nav__link { font-size: 16px; padding: 13px 12px; }
+}
+
+/* The welcome panel above already lists the four pages as coloured cards;
+   Payload's own duplicate list underneath just doubles the reading. */
+.dashboard__group,
+.dashboard__label,
+.dashboard__card-list { display: none !important; }
+
+/* On phones the off-canvas sidebar sits outside the viewport but still
+   counts toward scroll width, which produced a 251px horizontal scrollbar
+   on every admin screen. Clip it. */
+@media (max-width: 1024px) {
+  html,
+  body,
+  .template-default,
+  .template-default__wrap {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+}
